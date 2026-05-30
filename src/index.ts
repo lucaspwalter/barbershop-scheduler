@@ -4,6 +4,8 @@ import 'dotenv/config';
 import { appointmentRoutes } from './modules/appointments/appointments.routes';
 import { barberRoutes } from './modules/barbers/barbers.routes';
 import { clientRoutes } from './modules/clients/clients.routes';
+import { notificationRoutes } from './modules/notifications/notifications.routes';
+import { queueRoutes } from './modules/queue/queue.routes';
 import { serviceRoutes } from './modules/services/services.routes';
 
 const app = Fastify({
@@ -25,6 +27,8 @@ app.register(barberRoutes, { prefix: '/barbers' });
 app.register(clientRoutes, { prefix: '/clients' });
 app.register(serviceRoutes, { prefix: '/services' });
 app.register(appointmentRoutes, { prefix: '/appointments' });
+app.register(queueRoutes, { prefix: '/queue' });
+app.register(notificationRoutes, { prefix: '/notifications' });
 
 const start = async () => {
   try {

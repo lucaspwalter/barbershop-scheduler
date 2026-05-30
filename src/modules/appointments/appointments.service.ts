@@ -1,6 +1,7 @@
 import { AppError } from '../../errors/app-error';
 import { BarbersRepository } from '../barbers/barbers.repository';
 import { ClientsRepository } from '../clients/clients.repository';
+import { NotificationsService } from '../notifications/notifications.service';
 import { ServicesRepository } from '../services/services.repository';
 import {
   AppointmentStatus,
@@ -30,6 +31,7 @@ export class AppointmentsService {
     private readonly barbersRepository = new BarbersRepository(),
     private readonly servicesRepository = new ServicesRepository(),
     private readonly clientsRepository = new ClientsRepository(),
+    private readonly notificationsService = new NotificationsService(),
   ) {}
 
   async create(data: CreateAppointmentRequest) {
@@ -77,13 +79,25 @@ export class AppointmentsService {
       );
     }
 
-    return this.appointmentsRepository.create({
+    const appointment = await this.appointmentsRepository.create({
       barber_id: data.barber_id,
       service_id: data.service_id,
       client_id: data.client_id,
       starts_at: startsAt,
       ends_at: endsAt,
     });
+
+    await this.notificationsService.send({
+      client_id: client.id,
+      phone: client.phone,
+      type: 'appointment_scheduled',
+      appointment_id: appointment.id,
+      message: `Olá ${client.name}! Seu agendamento foi confirmado para ${formatDateTime(
+        startsAt,
+      )} com duração de ${service.duration_minutes} min. Valor: R$ ${formatPrice(service.price)}.`,
+    });
+
+    return appointment;
   }
 
   async findAll(filters: AppointmentFilters) {
@@ -111,7 +125,23 @@ export class AppointmentsService {
       );
     }
 
-    return this.appointmentsRepository.updateStatus(id, nextStatus);
+    const updatedAppointment = await this.appointmentsRepository.updateStatus(id, nextStatus);
+
+    if (nextStatus === 'confirmed') {
+      const client = await this.clientsRepository.findById(appointment.client_id);
+
+      if (client) {
+        await this.notificationsService.send({
+          client_id: client.id,
+          phone: client.phone,
+          type: 'appointment_confirmed',
+          appointment_id: appointment.id,
+          message: `Olá ${client.name}! Seu agendamento está confirmado. Te esperamos!`,
+        });
+      }
+    }
+
+    return updatedAppointment;
   }
 
   async cancel(id: string) {
@@ -127,4 +157,23 @@ export class AppointmentsService {
 
     return this.appointmentsRepository.updateStatus(id, 'cancelled');
   }
+}
+
+function formatDateTime(date: Date): string {
+  const parts = new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(date);
+
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+  return `${values.day}/${values.month}/${values.year} ${values.hour}:${values.minute}`;
+}
+
+function formatPrice(price: string | number): string {
+  return Number(price).toFixed(2).replace('.', ',');
 }
