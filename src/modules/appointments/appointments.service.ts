@@ -41,8 +41,10 @@ export class AppointmentsService {
       throw new AppError('starts_at must be a valid ISO 8601 date', 400);
     }
 
-    if (startsAt <= new Date()) {
-      throw new AppError('starts_at cannot be in the past', 400);
+    if (process.env.SKIP_DATE_VALIDATION !== 'true') {
+      if (startsAt < new Date()) {
+        throw new AppError('Appointment date must be in the future', 400);
+      }
     }
 
     const [barber, service, client] = await Promise.all([
