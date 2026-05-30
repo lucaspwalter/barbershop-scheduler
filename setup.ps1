@@ -79,11 +79,12 @@ try {
         docker start barbershop-db | Out-Null
     } else {
         Write-Host "Criando container barbershop-db..."
+        Write-Host "Baixando imagem postgres:16 se necessário (pode demorar alguns minutos)..."
         docker run --name barbershop-db `
             -e POSTGRES_USER=barbershop `
             -e POSTGRES_PASSWORD=barbershop `
             -e POSTGRES_DB=barbershop `
-            -p 5433:5432 -d postgres:16 | Out-Null
+            -p 5433:5432 -d postgres:16
     }
     Start-Sleep -Seconds 3
 

@@ -65,6 +65,8 @@ log "Verificando Docker"
 if ! command_exists docker; then
   log "Instalando Docker"
   curl -fsSL https://get.docker.com | sh
+  sudo systemctl start docker
+  sleep 2
 else
   echo "Docker já instalado: $(docker --version)"
 fi
@@ -84,11 +86,12 @@ if sudo docker ps -a --format '{{.Names}}' | grep -q '^barbershop-db$'; then
   sudo docker start barbershop-db >/dev/null
 else
   echo "Criando container barbershop-db..."
+  echo "Baixando imagem postgres:16 se necessário (pode demorar alguns minutos)..."
   sudo docker run --name barbershop-db \
     -e POSTGRES_USER=barbershop \
     -e POSTGRES_PASSWORD=barbershop \
     -e POSTGRES_DB=barbershop \
-    -p 5433:5432 -d postgres:16 >/dev/null
+    -p 5433:5432 -d postgres:16
 fi
 
 echo "Aguardando banco iniciar..."
