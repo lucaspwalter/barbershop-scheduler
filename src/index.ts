@@ -6,6 +6,7 @@ import { barberRoutes } from './modules/barbers/barbers.routes';
 import { clientRoutes } from './modules/clients/clients.routes';
 import { notificationRoutes } from './modules/notifications/notifications.routes';
 import { queueRoutes } from './modules/queue/queue.routes';
+import { reportRoutes } from './modules/reports/reports.routes';
 import { serviceRoutes } from './modules/services/services.routes';
 
 const app = Fastify({
@@ -29,6 +30,7 @@ app.register(serviceRoutes, { prefix: '/services' });
 app.register(appointmentRoutes, { prefix: '/appointments' });
 app.register(queueRoutes, { prefix: '/queue' });
 app.register(notificationRoutes, { prefix: '/notifications' });
+app.register(reportRoutes, { prefix: '/reports' });
 
 const start = async () => {
   try {
