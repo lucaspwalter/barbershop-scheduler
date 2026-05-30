@@ -1,7 +1,9 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import 'dotenv/config';
+import { appointmentRoutes } from './modules/appointments/appointments.routes';
 import { barberRoutes } from './modules/barbers/barbers.routes';
+import { clientRoutes } from './modules/clients/clients.routes';
 import { serviceRoutes } from './modules/services/services.routes';
 
 const app = Fastify({
@@ -20,7 +22,9 @@ app.get('/', async () => {
 });
 
 app.register(barberRoutes, { prefix: '/barbers' });
+app.register(clientRoutes, { prefix: '/clients' });
 app.register(serviceRoutes, { prefix: '/services' });
+app.register(appointmentRoutes, { prefix: '/appointments' });
 
 const start = async () => {
   try {
