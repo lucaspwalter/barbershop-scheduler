@@ -1,39 +1,39 @@
 # Barbershop Scheduler
 
-## O que é
+## What it is
 
-Barbearias que controlam agendamentos manualmente podem perder horários, criar conflitos na agenda e deixar clientes sem confirmação. O Barbershop Scheduler organiza esse fluxo em uma aplicação com cadastro de clientes, barbeiros, serviços, horários, fila de espera e notificações.
+Barbershops that manage appointments manually can miss time slots, create scheduling conflicts, and leave customers without confirmation. Barbershop Scheduler organizes this workflow in an application for managing customers, barbers, services, appointments, waitlists, and notifications.
 
-O projeto resolve o gerenciamento de agendamentos com validação de conflitos, acompanhamento de clientes em espera, envio de confirmações por WhatsApp e relatórios para apoiar a rotina da barbearia.
+The project handles appointment management with conflict validation, waitlisted customer tracking, WhatsApp confirmations, and reports that support daily barbershop operations.
 
-## Portfólio
+## Portfolio
 
-Este projeto faz parte do meu portfólio:
+This project is part of my portfolio:
 
 https://lucaspwalter.github.io/portfolio/
 
-## Como funciona
+## How it works
 
-- Agendamento com detecção de conflito de horários entre barbeiro, cliente e serviço.
-- Fila de espera para clientes que não conseguem um horário disponível.
-- Engine de notificações WhatsApp usando Evolution API.
-- Geração de relatórios para acompanhar agendamentos, serviços e movimentação da barbearia.
+- Appointment scheduling with conflict detection across barbers, customers, and services.
+- Waitlist for customers unable to find an available time slot.
+- WhatsApp notification engine using Evolution API.
+- Reports for tracking appointments, services, and barbershop activity.
 
-## Notificações WhatsApp
+## WhatsApp notifications
 
-A integração com WhatsApp requer uma Evolution API própria do usuário.
+WhatsApp integration requires the user's own Evolution API instance.
 
-Documentação:
+Documentation:
 
 https://doc.evolution-api.com
 
-Para testar:
+To test:
 
-- Crie um cliente com um número real.
-- Crie um agendamento para esse cliente.
-- Verifique o resultado em `/notifications` no front-end.
+- Create a customer with a real phone number.
+- Create an appointment for that customer.
+- Check the result at `/notifications` in the frontend.
 
-## Tecnologias
+## Technologies
 
 - Node.js
 - TypeScript
@@ -42,9 +42,9 @@ Para testar:
 - Knex
 - Next.js
 
-## Como rodar localmente
+## Running locally
 
-Com Docker instalado:
+With Docker installed:
 
 ```bash
 git clone https://github.com/lucaspwalter/barbershop-scheduler.git
@@ -52,13 +52,13 @@ cd barbershop-scheduler
 docker compose up
 ```
 
-Acesse `http://localhost:3000`. Para dados demonstrativos, com o backend ativo, rode `npm run seed` em outro terminal.
+Open `http://localhost:3000`. For sample data, keep the backend running and run `npm run seed` in another terminal.
 
-Instruções manuais também estão disponíveis na página do projeto no portfólio:
+Manual instructions are also available on the project's portfolio page:
 
 https://lucaspwalter.github.io/portfolio/
 
-## Estrutura do projeto
+## Project structure
 
 ```text
 barbershop-scheduler/
