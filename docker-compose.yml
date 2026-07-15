@@ -14,15 +14,10 @@ services:
       retries: 20
 
   backend:
-    image: node:20-alpine
-    working_dir: /app
-    command: sh -c "npm ci && npm run migrate && npm run dev"
+    build: .
     environment:
       DATABASE_URL: postgresql://barbershop:barbershop@db:5432/barbershop
       SKIP_DATE_VALIDATION: "true"
-    volumes:
-      - .:/app
-      - barbershop_backend_modules:/app/node_modules
     ports:
       - "3333:3333"
     depends_on:
@@ -30,14 +25,9 @@ services:
         condition: service_healthy
 
   frontend:
-    image: node:20-alpine
-    working_dir: /app
-    command: sh -c "npm ci && npm run dev"
+    build: ./frontend
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3333
-    volumes:
-      - ./frontend:/app
-      - barbershop_frontend_modules:/app/node_modules
     ports:
       - "3000:3000"
     depends_on:
@@ -45,5 +35,3 @@ services:
 
 volumes:
   barbershop_db:
-  barbershop_backend_modules:
-  barbershop_frontend_modules:

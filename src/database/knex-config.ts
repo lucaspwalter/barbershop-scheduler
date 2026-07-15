@@ -8,7 +8,7 @@ if (!connectionString) {
 }
 
 const databaseUrl = new URL(connectionString);
-const isLocalDatabase = ['localhost', '127.0.0.1'].includes(databaseUrl.hostname);
+const isLocalDatabase = ['localhost', '127.0.0.1', 'db'].includes(databaseUrl.hostname);
 
 const config: Knex.Config = {
   client: 'pg',
