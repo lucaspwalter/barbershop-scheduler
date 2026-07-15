@@ -1,25 +1,27 @@
 # Barbershop Scheduler
 
-## What it is
+A full-stack appointment management platform for barbershops.
+
+## Overview
 
 Barbershops that manage appointments manually can miss time slots, create scheduling conflicts, and leave customers without confirmation. Barbershop Scheduler organizes this workflow in an application for managing customers, barbers, services, appointments, waitlists, and notifications.
 
 The project handles appointment management with conflict validation, waitlisted customer tracking, WhatsApp confirmations, and reports that support daily barbershop operations.
 
-## Portfolio
+## Demo
 
 This project is part of my portfolio:
 
 https://lucaspwalter.github.io/portfolio/
 
-## How it works
+## Features
 
 - Appointment scheduling with conflict detection across barbers, customers, and services.
 - Waitlist for customers unable to find an available time slot.
 - WhatsApp notification engine using Evolution API.
 - Reports for tracking appointments, services, and barbershop activity.
 
-## WhatsApp notifications
+## WhatsApp Integration
 
 WhatsApp integration requires the user's own Evolution API instance.
 
@@ -33,7 +35,7 @@ To test:
 - Create an appointment for that customer.
 - Check the result at `/notifications` in the frontend.
 
-## Technologies
+## Tech Stack
 
 - Node.js
 - TypeScript
@@ -42,7 +44,7 @@ To test:
 - Knex
 - Next.js
 
-## Running locally
+## Getting Started
 
 With Docker installed:
 
@@ -58,7 +60,7 @@ Manual instructions are also available on the project's portfolio page:
 
 https://lucaspwalter.github.io/portfolio/
 
-## Project structure
+## Project Structure
 
 ```text
 barbershop-scheduler/
@@ -98,3 +100,7 @@ barbershop-scheduler/
 ├── setup.sh
 └── tsconfig.json
 ```
+
+## License
+
+Licensed under the MIT License. See `LICENSE`.
