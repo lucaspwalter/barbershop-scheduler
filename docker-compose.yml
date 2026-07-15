@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: barbershop
+      POSTGRES_PASSWORD: barbershop
+      POSTGRES_DB: barbershop
+    volumes:
+      - barbershop_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U barbershop -d barbershop"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm ci && npm run migrate && npm run dev"
+    environment:
+      DATABASE_URL: postgresql://barbershop:barbershop@db:5432/barbershop
+      SKIP_DATE_VALIDATION: "true"
+    volumes:
+      - .:/app
+      - barbershop_backend_modules:/app/node_modules
+    ports:
+      - "3333:3333"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm ci && npm run dev"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3333
+    volumes:
+      - ./frontend:/app
+      - barbershop_frontend_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  barbershop_db:
+  barbershop_backend_modules:
+  barbershop_frontend_modules:

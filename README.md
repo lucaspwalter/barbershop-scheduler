@@ -44,7 +44,17 @@ Para testar:
 
 ## Como rodar localmente
 
-As instruções completas de instalação e execução estão disponíveis na página do projeto no portfólio:
+Com Docker instalado:
+
+```bash
+git clone https://github.com/lucaspwalter/barbershop-scheduler.git
+cd barbershop-scheduler
+docker compose up
+```
+
+Acesse `http://localhost:3000`. Para dados demonstrativos, com o backend ativo, rode `npm run seed` em outro terminal.
+
+Instruções manuais também estão disponíveis na página do projeto no portfólio:
 
 https://lucaspwalter.github.io/portfolio/
 

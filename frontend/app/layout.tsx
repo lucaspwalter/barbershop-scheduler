@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Barbershop Scheduler",
@@ -19,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} h-full antialiased`}>
+    <html lang="pt-BR" className="h-full antialiased">
       <body className="min-h-full bg-gray-950 text-white">
         <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 border-r border-gray-800 bg-gray-950 px-5 py-6 md:block">
           <div className="mb-10">
